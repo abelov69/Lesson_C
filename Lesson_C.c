@@ -6,6 +6,8 @@
 #define qLes 4 // Количество уроков, за которые выполнены задания
 #define maxVolt 10000 // Максимально допустимое значение напряжения для ввода
 #define maxR 1000000 // Максимально допустимое значение сопротивления для ввода
+#define minVal 0 // Минимально допустимое значение для ввода (задание 2)
+#define maxVal 100 // Максимально допустимое значение для ввода (задание 2)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -56,8 +58,15 @@ int main() {
         printf("Расчетная выделяемая мощность на сопротивлении R2 %f Вт\n", I * (I * R2));
         
     } break; // Конец блока 1го урока
-    case 2: { // Урок 2
-
+    case 2: { // Урок 2 - проверка попадания введенного значения в диапазон
+        double userNum;
+        do {
+            printf("Введите значение из диапазона [%d..%d]: ", minVal, maxVal);
+            scanf("%s",strVal);
+            userNum = atof(strVal);
+            if(userNum < minVal || userNum > maxVal) printf("Введено неккоретное значение.\n");
+        } while(userNum < minVal || userNum > maxVal);
+        printf("Bingo!!");
     } break; // Конец блока 2го урока
     case 3: { // Урок 3
 
