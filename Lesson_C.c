@@ -177,6 +177,42 @@ int main() {
         }
         free(mas);
     } break; // конец 6го задания
+
+    case 7: { // Задание 7 - приведение типа данных
+        int qmas = 0; // Размер будущего массива
+        unsigned int *mas = NULL; // массив целых чисел
+        int i; // счетчик массива
+        printf("Введите размер массива целых чисел: ");
+        scanf("%s", strVal);
+        qmas = atoi(strVal);
+        if(qmas == 0) { 
+            printf("Вы ввели нулевой размер массива.\n"); 
+            break;
+        }
+        mas = (unsigned int *) malloc(qmas);
+        if(mas == NULL) {
+            printf("Не удалось выделить память для массива\n");
+            break;
+        }
+        printf("Необходимо ввести %d целых положительных чисел для заполнения массива\n", qmas);
+        printf("Все неккоректно введенные значения будут приравнены 0\n");
+        for (i = 0; i < qmas; i++) { // Заполняем массив целыми числами
+            printf("Введите %d число: ", i + 1);
+            scanf("%s", strVal);
+            mas[i] = atoi(strVal);
+            if(mas[i] < 0) mas[i] = mas[i] * -1; // если введено отрицательное число, преобразуем в положительное
+        }
+        printf("Введенный размер массива %d.\nВведенный массив (int  ) в HEX: ", qmas);
+        for (i = 0; i < qmas; i++) {
+            printf("%d(%#x-%d) ", (unsigned int) mas[i], (unsigned int) mas[i], sizeof((unsigned int) mas[i]));
+        }
+        printf("\n");
+        printf("Введенный массив (short) в HEX: ");
+        for (i = 0; i < qmas; i++) {
+            printf("%d(%#x-%d) ", (unsigned short) mas[i], (unsigned short) mas[i], sizeof((unsigned short) mas[i]));
+        }
+        printf("\n");
+    } break; // конец 7го задания      
     
     default:
         break;
