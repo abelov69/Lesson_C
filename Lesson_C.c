@@ -16,6 +16,7 @@
 #include <math.h>
 
 int calc2Equal (int a, int b, int c, float *x1, float *x2); // Прототип функции вычисления квадратного уравнения
+int evenTest( int *mas, int qmas); // Прототип функции проверки четности элементов массива
 
 int main() {
     unsigned int iqLes = qLes;  // Количество уроков за которые выполнены задания в int формате
@@ -137,8 +138,44 @@ int main() {
     } break; // конец 5го задания
 
     case 6: { // Задание 6 - Массивы ============================================================================================
+        int qmas = 0; // Размер будущего массива
+        int *mas = NULL; // массив целых чисел
+        int i; // счетчик массива
+        printf("Введите размер массива целых чисел: ");
+        scanf("%s", strVal);
+        qmas = atoi(strVal);
+        if(qmas == 0) { 
+            printf("Вы ввели нулевой размер массива.\n"); 
+            break;
+        }
+        mas = (int *) malloc(qmas);
+        if(mas == NULL) {
+            printf("Не удалось выделить память для массива\n");
+            break;
+        }
+        printf("Необходимо ввести %d целых чисел для заполнения массива\n", qmas);
+        printf("Все неккоректно введенные значения будут приравнены 0\n");
+        for (i = 0; i < qmas; i++) { // Заполняем массив целыми числами
+            printf("Введите %d число: ", i + 1);
+            scanf("%s", strVal);
+            mas[i] = atoi(strVal);
+        }
+        printf("Введенный размер массива %d. Введенный массив: \n", qmas);
+        for (i = 0; i < qmas; i++) {
+            printf("%d ", mas[i]);
+        }
+        printf("\n");
 
-
+        if(evenTest(mas, qmas) == 0) {
+            printf("Во введенных значениях отсутствуют нечетные числа\n");
+        } else {
+            printf("Обработанный массив: ");
+            for (i = 0; i < qmas; i++) {
+                printf("%d ", mas[i]);
+            }
+            printf("\n");            
+        }
+        free(mas);
     } break; // конец 6го задания
     
     default:
@@ -148,6 +185,7 @@ int main() {
 
     return 0;
 }
+
 /**
  * @brief Функция вычисления квадратного уравнения
  * 
@@ -172,4 +210,22 @@ int calc2Equal (int a, int b, int c, float *x1, float *x2) {
         return 1;
     }
     return -1;
+}
+
+/**
+ * @brief Функция, проверяющая массив на наличие нечетных чисел. Удваивает их, если они есть.
+ * 
+ * @param mas Указатель на передаваемый массив целых чисел
+ * @param qmas Размер массива
+ * @return int Возвращает 0 - если нет нечетных чисел, 1 - если есть
+ */
+int evenTest( int *mas, int qmas) {
+    int result = 0;
+    for(int i = 0; i < qmas; i++) {
+        if(mas[i] % 2 != 0) {
+            mas[i] = mas[i] * 2;
+            result = 1;
+        }
+    }
+    return result;
 }
