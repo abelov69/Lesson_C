@@ -36,6 +36,7 @@ int evenTest( int *mas, int qmas); // Функция проверки четности элементов массив
 int int2binstr (int value, char *str); // Функция перевода числа в бинарный вид
 int calcPRect (Rectangle *usrrect); // Функция подсчета периметра прямоугольника
 int calcSRect (Rectangle *usrrect); // Функция подсчета площади прямоугольника
+int * mem2intarray (int size); // Функция выделения памяти для массива типа int
 
 int main() {
     unsigned int iqLes = qLes;  // Количество уроков за которые выполнены задания в int формате
@@ -262,13 +263,35 @@ int main() {
     } break; // конец 9го задания
 
     case 10: { // Задание 10 - выделение памяти
-
+        int usrNum; // число, введенное пользователем
+        int *myArray; // массив
+        printf("Введите целое число: ");
+        scanf("%s", strVal);
+        usrNum = atoi(strVal);
+        myArray = mem2intarray(usrNum);
+        if(myArray) {
+            int i; // счетчик
+            printf("Инициализированный массив: ");
+            for(i = 0; i < usrNum; i++) printf("%d ", myArray[i]);
+            printf("\n");
+            printf("Заполните массив целыми числами\n");
+            for (i = 0; i < usrNum; i++) {
+                printf("Введите %d число: ", i);
+                scanf("%s", strVal);
+                myArray[i] = atoi(strVal);
+            }
+            printf("Заполненный массив массив: ");
+            for(i = 0; i < usrNum; i++) printf("%d ", myArray[i]);
+            printf("\n");
+            free(myArray);
+        }
+        myArray = NULL;
     } break; // конец 10го задания
 
     default:
+        printf("Exception!");
         break;
     }
-    
 
     return 0;
 }
@@ -355,4 +378,17 @@ int calcSRect (Rectangle *usrrect) {
     if (usrrect == NULL) return -1;
     usrrect->S = usrrect->width * usrrect->height;
     return 0;
+}
+
+/**
+ * @brief Функция для выделения памяти под int массив, заполняющая его нулями
+ * 
+ * @param size размер массива
+ * @return int* указатель на выделенный фрагмент памяти
+ */
+int * mem2intarray (int size) {
+    int *intarray = NULL;
+    intarray = (int *) malloc (size);
+    if(intarray) for(int i = 0; i < size; i++) intarray[i] = 0;
+    return intarray;
 }
