@@ -15,9 +15,27 @@
 #include <stdlib.h>
 #include <math.h>
 
-int calc2Equal (int a, int b, int c, float *x1, float *x2); // Прототип функции вычисления квадратного уравнения
-int evenTest( int *mas, int qmas); // Прототип функции проверки четности элементов массива
-int int2binstr (int value, char *str); // Прототип функции перевода числа в бинарный вид
+/**
+ * @brief Структура, описывающая прямоугольник.
+ * width - ширина прямоугольника
+ * height - высота прямоугольника
+ * P - периметр прямоугольника
+ * S- площадь прямоугольника
+ */
+struct rectangle
+{
+    int width;
+    int height;
+    int P;
+    int S;
+};
+typedef struct rectangle Rectangle;
+
+int calc2Equal (int a, int b, int c, float *x1, float *x2); // Функция вычисления квадратного уравнения
+int evenTest( int *mas, int qmas); // Функция проверки четности элементов массива
+int int2binstr (int value, char *str); // Функция перевода числа в бинарный вид
+int calcPRect (Rectangle *usrrect); // Функция подсчета периметра прямоугольника
+int calcSRect (Rectangle *usrrect); // Функция подсчета площади прямоугольника
 
 int main() {
     unsigned int iqLes = qLes;  // Количество уроков за которые выполнены задания в int формате
@@ -179,7 +197,7 @@ int main() {
         free(mas);
     } break; // конец 6го задания
 
-    case 7: { // Задание 7 - приведение типа данных
+    case 7: { // Задание 7 - приведение типа данных =============================================================================
         int qmas = 0; // Размер будущего массива
         unsigned int *mas = NULL; // массив целых чисел
         int i; // счетчик массива
@@ -215,7 +233,7 @@ int main() {
         printf("\n");
     } break; // конец 7го задания   
     
-    case 8: { // Задание 8 - строки. Написать функцию, возвращающую полученное число в бинарном виде (строкой)
+    case 8: { // Задание 8 - строки. Написать функцию, возвращающую полученное число в бинарном виде (строкой) ==================
         int usrNum; // число, введенное пользователем
         char binStr[32]; // представления целого числа (int) в бинарном виде
         printf("Введите целое число: ");
@@ -231,8 +249,16 @@ int main() {
         }
     } break; // конец 8го задания
 
-    case 9: { // Задание 9 - структуры.
-
+    case 9: { // Задание 9 - структуры ==========================================================================================
+        Rectangle myRect; // создаем прямоугольник        
+        printf("Введите ширину прямоугольника (целое число): ");
+        scanf("%s", strVal);
+        myRect.width = atoi(strVal);
+        printf("Введите высоту прямоугольника (целое число): ");
+        scanf("%s", strVal);
+        myRect.height = atoi(strVal);
+        if(!calcPRect(&myRect)) printf("Периметр прямоугольника %d\n", myRect.P);
+        if(!calcSRect(&myRect)) printf("Площадь прямоугольника %d\n", myRect.S);
     } break; // конец 9го задания
 
     case 10: { // Задание 10 - выделение памяти
@@ -304,5 +330,29 @@ int int2binstr (int value, char *str) {
         str[i] = (value & mask) ? 1 : 0;
         mask = mask * 2;
     }    
+    return 0;
+}
+
+/**
+ * @brief Функция подсчета периметра прямоугольника
+ * 
+ * @param usrrect указатель на структуру типа Rectangle (прямоугольник)
+ * @return int возвращается 0 - если подсчет произведен корректно, иначе -1
+ */
+int calcPRect (Rectangle *usrrect) {
+    if (usrrect == NULL) return -1;
+    usrrect->P = usrrect->width * 2 + usrrect->height * 2;
+    return 0;
+}
+
+/**
+ * @brief Функция подсчета площади прямоугольника
+ * 
+ * @param usrrect указатель на структуру типа Rectangle (прямоугольник)
+ * @return int int возвращается 0 - если подсчет произведен корректно, иначе -1
+ */
+int calcSRect (Rectangle *usrrect) {
+    if (usrrect == NULL) return -1;
+    usrrect->S = usrrect->width * usrrect->height;
     return 0;
 }
